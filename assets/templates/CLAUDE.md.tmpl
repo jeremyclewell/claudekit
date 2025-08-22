@@ -1,0 +1,112 @@
+# {{or .ProjectName "Your Project"}} — Engineering Ground Rules
+
+## Build & Test Commands
+
+{{if .HasGo}}**Go:**
+- `go build ./...` — Build all packages
+- `go test ./... -run . -v` — Run tests with verbose output
+- `golangci-lint run` — Lint and static analysis
+{{end}}
+{{if .HasTypeScript}}**TypeScript/JavaScript:**
+- `npm run build` / `pnpm build` — Build application
+- `npm run test -w` or `vitest` — Run tests
+- `eslint . && prettier -c .` — Lint and format check
+{{end}}
+{{if .HasPython}}**Python:**
+- `pytest -q` — Run tests quietly
+- `ruff check . && ruff format --check .` — Lint and format check
+- `mypy .` — Type checking
+{{end}}
+{{if .HasRust}}**Rust:**
+- `cargo build --release` — Build optimized binary
+- `cargo test` — Run test suite
+- `cargo clippy --all-targets --all-features` — Lint with Clippy
+{{end}}
+{{if .HasCpp}}**C++:**
+- `g++ -Wall -Wextra -O2 -std=c++17 *.cpp` — Compile with warnings
+- `make test` — Run tests (if Makefile exists)
+- `clang-tidy *.cpp` — Static analysis
+{{end}}
+{{if .HasJava}}**Java/Kotlin:**
+- `./gradlew build` — Build with Gradle
+- `./gradlew test` — Run test suite
+- `./gradlew check` — Run all checks (lint, test, etc.)
+{{end}}
+{{if .HasPhp}}**PHP:**
+- `composer install` — Install dependencies
+- `phpunit` — Run test suite
+- `phpcs --standard=PSR12 .` — Code style checking
+{{end}}
+{{if .HasRuby}}**Ruby:**
+- `bundle install` — Install gems
+- `bundle exec rspec` — Run RSpec tests
+- `rubocop` — Code style and quality
+{{end}}
+{{if .HasSwift}}**Swift:**
+- `swift build -c release` — Build for release
+- `swift test` — Run test suite
+- `swiftlint` — Style and conventions
+{{end}}
+{{if .HasCsharp}}**C#:**
+- `dotnet build --configuration Release` — Build application
+- `dotnet test` — Run test suite
+- `dotnet format --verify-no-changes` — Format verification
+{{end}}
+{{if .HasDart}}**Dart/Flutter:**
+- `dart compile exe main.dart` — Compile to executable
+- `dart test` — Run Dart tests
+- `flutter test` — Run Flutter widget tests
+- `dart analyze` — Static analysis
+{{end}}
+{{if .HasShell}}**Shell/Bash:**
+- `shellcheck *.sh` — Shell script linting
+- `bash -n script.sh` — Syntax check
+{{end}}
+{{if .HasLua}}**Lua:**
+- `luac -p *.lua` — Syntax check
+- `luacheck .` — Static analysis (if installed)
+{{end}}
+{{if .HasElixir}}**Elixir:**
+- `mix compile --warnings-as-errors` — Strict compilation
+- `mix test` — Run ExUnit tests
+- `mix format --check-formatted` — Format verification
+{{end}}
+{{if .HasHaskell}}**Haskell:**
+- `stack build` — Build with Stack
+- `stack test` — Run test suite
+- `hlint .` — Suggestions and improvements
+{{end}}
+{{if .HasElm}}**Elm:**
+- `elm make src/Main.elm --optimize` — Build optimized
+- `elm-test` — Run test suite
+- `elm-format --validate .` — Format validation
+{{end}}
+{{if .HasJulia}}**Julia:**
+- `julia --project=. -e "using Pkg; Pkg.instantiate()"` — Install dependencies
+- `julia --project=. -e "using Pkg; Pkg.test()"` — Run tests
+{{end}}
+{{if .HasSql}}**SQL:**
+- `sqlfluff lint .` — SQL style checking
+- `sqlfluff format .` — SQL formatting
+{{end}}
+## Code Style
+- Prefer small, pure functions
+- Comprehensive unit tests before large changes
+- Security & privacy by default
+
+## Workflow
+- Plan → Implement → Verify → Review → Merge
+- Use subagents proactively for review, tests, and debugging
+
+## Important Files to Know
+- @README
+- @.github/workflows (CI)
+
+## Claude Usage
+- Think first, then code; iterate with tests.
+- Prefer targeted file edits; do not modify secrets or prod configs.
+{{if .ClaudeMDExtras}}
+## Project‑Specific Notes
+{{.ClaudeMDExtras}}
+{{end}}
+> Initialized by claudekit on {{.Date}}

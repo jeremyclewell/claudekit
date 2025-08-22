@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "PostWrite: running linters/tests if available..."
+
+# Go
+{{if .HasGo}}command -v golangci-lint >/dev/null && golangci-lint run || true
+go test ./... -run . -count=1 -v || true{{end}}
+
+# TypeScript/JavaScript
+{{if .HasTypeScript}}[ -f package.json ] && (npm run -s lint || npx eslint . || true) || true
+[ -f package.json ] && (npm test -w || npx vitest run || true) || true{{end}}
+
+# Python  
+{{if .HasPython}}command -v ruff >/dev/null && (ruff check . || true); command -v pytest >/dev/null && (pytest -q || true){{end}}
+
+# Rust
+{{if .HasRust}}command -v cargo >/dev/null && (cargo clippy --all-targets --all-features || true)
+command -v cargo >/dev/null && (cargo test || true){{end}}
+
+# C++
+{{if .HasCpp}}command -v clang-tidy >/dev/null && find . -name "*.cpp" -o -name "*.hpp" | head -10 | xargs clang-tidy || true
+command -v cppcheck >/dev/null && cppcheck --enable=warning --inconclusive --std=c++17 . || true{{end}}
+
+# Java/Kotlin
+{{if .HasJava}}[ -f build.gradle ] && ./gradlew check || true
+[ -f pom.xml ] && mvn compile test || true{{end}}
+
+# PHP
+{{if .HasPhp}}command -v php >/dev/null && find . -name "*.php" -exec php -l {} \; || true
+command -v phpcs >/dev/null && phpcs --standard=PSR12 . || true
+command -v phpunit >/dev/null && phpunit || true{{end}}
+
+# Ruby
+{{if .HasRuby}}command -v rubocop >/dev/null && rubocop || true
+command -v bundle >/dev/null && bundle exec rspec || true{{end}}
+
+# Swift
+{{if .HasSwift}}command -v swift >/dev/null && swift test || true
+command -v swiftlint >/dev/null && swiftlint || true{{end}}
+
+# C#
+{{if .HasCsharp}}command -v dotnet >/dev/null && dotnet build || true
+command -v dotnet >/dev/null && dotnet test || true{{end}}
+
+# Dart/Flutter
+{{if .HasDart}}command -v dart >/dev/null && dart analyze || true
+command -v dart >/dev/null && dart test || true
+command -v flutter >/dev/null && flutter test || true{{end}}
+
+# Shell/Bash
+{{if .HasShell}}command -v shellcheck >/dev/null && find . -name "*.sh" -o -name "*.bash" | head -10 | xargs shellcheck || true{{end}}
+
+# Lua
+{{if .HasLua}}command -v luacheck >/dev/null && luacheck . || true
+[ -f test.lua ] && lua test.lua || true{{end}}
+
+# Elixir
+{{if .HasElixir}}command -v mix >/dev/null && mix compile --warnings-as-errors || true
+command -v mix >/dev/null && mix test || true{{end}}
+
+# Haskell
+{{if .HasHaskell}}command -v stack >/dev/null && stack build || true
+command -v stack >/dev/null && stack test || true
+command -v hlint >/dev/null && hlint . || true{{end}}
+
+# Elm
+{{if .HasElm}}command -v elm >/dev/null && elm make src/Main.elm --output=/dev/null || true
+command -v elm-test >/dev/null && elm-test || true{{end}}
+
+# Julia
+{{if .HasJulia}}command -v julia >/dev/null && julia -e "using Pkg; Pkg.test()" || true{{end}}
+
+# SQL
+{{if .HasSql}}command -v sqlfluff >/dev/null && sqlfluff lint . || true{{end}}
