@@ -21,7 +21,7 @@ import (
 var assets embed.FS
 
 type Config struct {
-	ProjectDir     string
+	IsProjectLocal bool       // true = project-based, false = global/home directory
 	ProjectName    string
 	Languages      []string
 	Subagents      []string
@@ -604,8 +604,10 @@ func (m *model) renderStatus() string {
 	
 	// Project Setup
 	status.WriteString("📁 Project Setup:\n")
-	if m.config.ProjectDir != "" {
-		status.WriteString(fmt.Sprintf("  Directory: %s\n", m.config.ProjectDir))
+	if m.config.IsProjectLocal {
+		status.WriteString("  Scope: Project-specific (current directory)\n")
+	} else {
+		status.WriteString("  Scope: Global (home directory)\n")
 	}
 	if m.config.ProjectName != "" {
 		status.WriteString(fmt.Sprintf("  Name: %s\n", m.config.ProjectName))
@@ -653,6 +655,7 @@ func (m *model) renderStatus() string {
 	return status.String()
 }
 
+
 // Helper function to clean emoji prefixes from form selections
 func cleanFormValue(value string) string {
 	// Remove emoji and space prefix (e.g., "🔍 code-reviewer" -> "code-reviewer")
@@ -673,22 +676,22 @@ func cleanFormValues(values []string) []string {
 
 func main() {
 	cfg := Config{
-		Languages:    []string{"Go"},
-		Subagents:    []string{"code-reviewer", "test-runner", "bug-sleuth"},
-		Hooks:        []string{"pre-write-guard", "post-write-lint", "session-start", "prompt-lint"},
-		WantSlashCmd: true,
-		MCPServers:   []string{"notion", "linear", "sentry", "github"},
+		IsProjectLocal: true,  // Default to project-specific
+		Languages:      []string{"Go"},
+		Subagents:      []string{"code-reviewer", "test-runner", "bug-sleuth"},
+		Hooks:          []string{"pre-write-guard", "post-write-lint", "session-start", "prompt-lint"},
+		WantSlashCmd:   true,
+		MCPServers:     []string{"notion", "linear", "sentry", "github"},
 	}
 
 	form := huh.NewForm(
 		// Page 1: Project Setup
 		huh.NewGroup(
 			huh.NewNote().Title("📁 Project Setup").Description("Configure your project basics and language support"),
-			huh.NewInput().
-				Title("Project directory").
-				Description("Where should the Claude Code configuration be created?").
-				Placeholder(".").
-				Value(&cfg.ProjectDir),
+			huh.NewConfirm().
+				Title("Project-specific configuration?").
+				Description("Yes = Configure for this project only\nNo = Global configuration in your home directory").
+				Value(&cfg.IsProjectLocal),
 			huh.NewInput().
 				Title("Project name").
 				Description("Used in generated documentation and configurations").
@@ -702,6 +705,7 @@ func main() {
 					"PHP", "Ruby", "Swift", "Kotlin", "Dart", "Shell", "Lua",
 					"Elixir", "Haskell", "Elm", "Julia", "SQL", "Arduino", 
 					"Scheme", "Lisp")...).
+				Height(8).
 				Value(&cfg.Languages),
 		),
 		
@@ -772,19 +776,42 @@ func main() {
 	cfg.Subagents = cleanFormValues(cfg.Subagents)
 	cfg.Hooks = cleanFormValues(cfg.Hooks)
 	cfg.MCPServers = cleanFormValues(cfg.MCPServers)
-
-	if cfg.ProjectDir == "" {
-		cfg.ProjectDir = "."
-	}
 	if err := run(cfg); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Println("\n✅ claudekit finished. Open Claude Code in this repo and start coding!")
+	if cfg.IsProjectLocal {
+		fmt.Println("\n✅ claudekit finished. Project-specific Claude Code configuration created!")
+		fmt.Println("   Open Claude Code in this directory and start coding!")
+	} else {
+		homeDir, _ := os.UserHomeDir()
+		configPath := filepath.Join(homeDir, ".claude")
+		fmt.Printf("\n✅ claudekit finished. Global Claude Code configuration created!\n")
+		fmt.Printf("   Configuration saved to: %s\n", configPath)
+		fmt.Println("   This configuration will apply to all your Claude Code sessions.")
+	}
 }
 
 func run(cfg Config) error {
-	abs, err := filepath.Abs(cfg.ProjectDir)
+	var targetDir string
+	var err error
+	
+	if cfg.IsProjectLocal {
+		// Project-specific: use current directory
+		targetDir, err = os.Getwd()
+		if err != nil {
+			return fmt.Errorf("failed to get current directory: %w", err)
+		}
+	} else {
+		// Global: use home directory with .claude subdirectory
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return fmt.Errorf("failed to get home directory: %w", err)
+		}
+		targetDir = filepath.Join(homeDir, ".claude")
+	}
+	
+	abs, err := filepath.Abs(targetDir)
 	if err != nil {
 		return err
 	}
