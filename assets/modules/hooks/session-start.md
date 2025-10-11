@@ -12,4 +12,14 @@ name: session-start
 type: hook
 ---
 
-**Session initialization and context-loading hook.** Runs when a new Claude Code session begins. Provides project context, loads environment state, and can display helpful information about the current project.
+**Session initialization and context-loading hook.** Runs automatically when a new Claude Code session begins.
+
+This hook provides comprehensive project context by:
+- Displaying git repository status (branch, uncommitted changes)
+- Showing the last 10 git commits for recent activity
+- Warning about uncommitted changes that might need attention
+- Listing open GitHub issues (if `gh` CLI is available)
+- Detecting project type (Go/Node.js/Rust/Python) and showing relevant version info
+- Providing a clean, organized overview to help Claude understand your project state
+
+The context gathering helps Claude provide more informed assistance by understanding what you've been working on recently and what the current state of your repository is.

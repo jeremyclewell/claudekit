@@ -12,4 +12,17 @@ name: pre-tool-use
 type: hook
 ---
 
-**Validation hook that runs before any tool use.** Guards against destructive operations and validates tool arguments before execution. Useful for preventing accidental writes to protected files or directories.
+**Pre-write validation hook that blocks edits to sensitive files.** Runs before Claude writes or edits any file.
+
+This hook acts as a safety guard by:
+- Parsing the file path from the write/edit tool request
+- Blocking writes to sensitive files and directories including:
+  - Environment files: `.env`, `.env.*` (root or any subdirectory)
+  - Secret directories: `*/secrets/*`
+  - Production configs: `*/config/production/*`
+  - Git internals: `*/.git/*`
+  - Private keys: `*.key`, `*.pem`
+- Displaying a clear error message when blocking (exit code 2)
+- Allowing all other file operations to proceed normally (exit code 0)
+
+This prevents accidental commits of secrets or credentials and protects critical configuration from unintended modifications. Customize the case patterns to match your project's security requirements.
