@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Session End Hook
 # Runs when Claude Code session terminates
 
@@ -9,49 +9,20 @@ set -euo pipefail
 # timeout: 30
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
-SESSION_LOG="$PROJECT_DIR/.claude/session-history.log"
+LOG_FILE="$PROJECT_DIR/.claude/logs/sessions.log"
+
+# Create log directory if needed
+mkdir -p "$PROJECT_DIR/.claude/logs"
 
 # Log session end
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
-echo "[$TIMESTAMP] Session ended" >> "$SESSION_LOG"
+echo "[$TIMESTAMP] Session ended" >> "$LOG_FILE"
 
-# Optional: Generate session summary
-if [ -n "${CLAUDE_SESSION_START:-}" ]; then
-    DURATION=$(($(date +%s) - CLAUDE_SESSION_START))
-    HOURS=$((DURATION / 3600))
-    MINUTES=$(((DURATION % 3600) / 60))
-    echo "  Duration: ${HOURS}h ${MINUTES}m" >> "$SESSION_LOG"
-fi
-
-# Optional: Archive conversation logs
-# This is a good place to:
-# - Save conversation transcripts
-# - Generate summary of changes made
-# - Update project documentation
-# - Clean up temporary files
-
-# Optional: Run final validation checks
-# Example: Check for uncommitted changes
-if command -v git &> /dev/null && [ -d "$PROJECT_DIR/.git" ]; then
-    if ! git diff --quiet 2>/dev/null; then
-        echo "  Warning: Uncommitted changes detected" >> "$SESSION_LOG"
+# Check for uncommitted changes
+if command -v git >/dev/null 2>&1 && [ -d "$PROJECT_DIR/.git" ]; then
+    if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
+        echo "  ⚠️  Uncommitted changes remain" >> "$LOG_FILE"
     fi
 fi
 
-# Optional: Save session metrics
-if [ -n "${CLAUDE_METRICS_FILE:-}" ]; then
-    cat > "${CLAUDE_METRICS_FILE}" <<EOF
-{
-  "session_end": "$TIMESTAMP",
-  "duration_seconds": ${DURATION:-0},
-  "project": "$(basename "$PROJECT_DIR")"
-}
-EOF
-fi
-
-# Optional: Cleanup
-# Remove temporary files, cache, etc.
-# Be careful not to remove important working files
-
-# Success
 exit 0

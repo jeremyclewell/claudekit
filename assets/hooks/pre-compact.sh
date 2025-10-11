@@ -1,54 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Pre-Compact Hook
-# Runs before Claude compacts conversation history to save context space
+# Runs before Claude compacts conversation history to save context
 
 set -euo pipefail
 
 # Hook metadata
 # hook_type: PreCompact
-# timeout: 60
-
-# This hook allows you to save important conversation state before compaction
-# Example use cases:
-# - Save critical conversation excerpts to a file
-# - Mark important messages that shouldn't be summarized
-# - Checkpoint current task state
-# - Archive conversation for later review
+# timeout: 30
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
-COMPACT_LOG="$PROJECT_DIR/.claude/compact-history.log"
+LOG_FILE="$PROJECT_DIR/.claude/logs/compact.log"
 
-# Log compaction event with timestamp
+# Create log directory if needed
+mkdir -p "$PROJECT_DIR/.claude/logs"
+
+# Log compaction event
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
-echo "[$TIMESTAMP] Pre-compact hook triggered" >> "$COMPACT_LOG"
+echo "[$TIMESTAMP] Conversation compaction initiated" >> "$LOG_FILE"
 
-# Optional: Save conversation snapshot
-if [ -n "${CLAUDE_CONVERSATION_ID:-}" ]; then
-    echo "  Conversation ID: $CLAUDE_CONVERSATION_ID" >> "$COMPACT_LOG"
-fi
+# Note: Customize this hook to save important state before compaction
+# Examples:
+# - Save TODO list or action items to a file
+# - Archive current task state
+# - Mark important decisions or context
 
-# Optional: Check for important markers in conversation
-# You could scan for TODO markers, decisions, or action items
-# and preserve them before compaction
-
-# Example: Create checkpoint file
-CHECKPOINT_FILE="$PROJECT_DIR/.claude/checkpoints/$(date '+%Y%m%d_%H%M%S').txt"
-mkdir -p "$PROJECT_DIR/.claude/checkpoints"
-
-cat > "$CHECKPOINT_FILE" <<EOF
-Conversation checkpoint before compaction
-Timestamp: $TIMESTAMP
-Project: $(basename "$PROJECT_DIR")
-
-# Add any important state you want to preserve
-# This could include:
-# - Current task status
-# - Important decisions made
-# - Action items
-# - Code locations being worked on
-EOF
-
-echo "  Checkpoint saved: $CHECKPOINT_FILE" >> "$COMPACT_LOG"
-
-# Success
 exit 0
