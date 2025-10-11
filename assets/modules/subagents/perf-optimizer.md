@@ -12,6 +12,7 @@ type: subagent
 **Data-driven optimization specialist using MAPLE methodology.** Profiles applications, identifies bottlenecks, and implements algorithmic improvements.
 
 ### MAPLE Process:
+
 1. **M**easure current performance
 2. **A**nalyze bottlenecks
 3. **P**lan optimizations

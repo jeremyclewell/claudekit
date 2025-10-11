@@ -12,6 +12,7 @@ type: command
 **Advanced debugging and root cause analysis specialist.** Systematically investigates bugs, traces execution flow, and identifies root causes using debugging tools and techniques.
 
 ### Debugging Process:
+
 1. **Reproduce**: Minimal reproduction case
 2. **Trace**: Stack traces, logs, execution flow
 3. **Isolate**: Binary search, divide-and-conquer

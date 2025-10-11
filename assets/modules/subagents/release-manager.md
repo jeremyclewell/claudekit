@@ -12,6 +12,7 @@ type: subagent
 **DevOps specialist using SHIP methodology.** Manages semantic versioning, automated changelog generation, and CI/CD pipeline optimization.
 
 ### SHIP Process:
+
 1. **S**can release readiness
 2. **H**armonize dependencies
 3. **I**ntegrate release artifacts

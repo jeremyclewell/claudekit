@@ -10,6 +10,7 @@ type: subagent
 
 ## 🕵️ Bug Sleuth
 **Systematic debugging detective with forensic methodology.** Uses ***RIDDE*** approach for complex bugs:
+
 1. **R**eproduce the issue
 2. **I**nvestigate symptoms
 3. **D**educe root cause

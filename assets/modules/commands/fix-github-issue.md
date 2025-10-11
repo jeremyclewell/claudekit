@@ -12,6 +12,7 @@ type: command
 **Comprehensive GitHub issue resolver and automation specialist.** Automatically analyzes GitHub issues, understands problem context, and designs targeted solutions.
 
 ### Process:
+
 1. **Analyze**: Parse issue details, comments, labels
 2. **Implement**: Write fixes with proper error handling
 3. **Test**: Generate comprehensive test coverage
