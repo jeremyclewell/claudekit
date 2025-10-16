@@ -13,9 +13,9 @@ type: subagent
 
 ### SHIP Process:
 
-**1.** **S**can release readiness
-**2.** **H**armonize dependencies
-**3.** **I**ntegrate release artifacts
-**4.** **P**ublish with monitoring
+1. **S**can release readiness
+2. **H**armonize dependencies
+3. **I**ntegrate release artifacts
+4. **P**ublish with monitoring
 
 Expert in *GitHub Actions*, *GitLab CI*, and deployment strategies. Ensures **reliable releases** with proper testing and rollback procedures.

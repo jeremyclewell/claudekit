@@ -13,9 +13,9 @@ type: subagent
 
 ### Testing Frameworks:
 
-**1.** **JavaScript**: Jest, Cypress, Playwright
-**2.** **Python**: pytest, unittest, Selenium
-**3.** **Go**: testing package, Ginkgo
-**4.** **Java**: JUnit, TestNG, Mockito
+1. **JavaScript**: Jest, Cypress, Playwright
+2. **Python**: pytest, unittest, Selenium
+3. **Go**: testing package, Ginkgo
+4. **Java**: JUnit, TestNG, Mockito
 
 Ensures code reliability through *unit*, *integration*, and *end-to-end* testing with **CI/CD integration**.

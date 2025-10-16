@@ -13,10 +13,10 @@ type: command
 
 ### Debugging Process:
 
-**1.** **Reproduce**: Minimal reproduction case
-**2.** **Trace**: Stack traces, logs, execution flow
-**3.** **Isolate**: Binary search, divide-and-conquer
-**4.** **Analyze**: Root cause identification
-**5.** **Fix**: Targeted solution with tests
+1. **Reproduce**: Minimal reproduction case
+2. **Trace**: Stack traces, logs, execution flow
+3. **Isolate**: Binary search, divide-and-conquer
+4. **Analyze**: Root cause identification
+5. **Fix**: Targeted solution with tests
 
 Uses *debuggers*, *profilers*, and **systematic problem-solving** approaches.
