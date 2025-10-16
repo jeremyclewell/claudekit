@@ -13,10 +13,10 @@ type: command
 
 ### Implementation Process:
 
-1. **Design**: Architecture, data models, API contracts
-2. **Backend**: Business logic, data layer, validation
-3. **Frontend**: UI components, state management, UX
-4. **Testing**: Unit, integration, E2E coverage
-5. **Documentation**: API docs, user guides, ADRs
+**1.** **Design**: Architecture, data models, API contracts
+**2.** **Backend**: Business logic, data layer, validation
+**3.** **Frontend**: UI components, state management, UX
+**4.** **Testing**: Unit, integration, E2E coverage
+**5.** **Documentation**: API docs, user guides, ADRs
 
 Follows **best practices** for maintainable, scalable feature development.

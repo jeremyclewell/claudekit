@@ -13,9 +13,9 @@ type: command
 
 ### Process:
 
-1. **Analyze**: Parse issue details, comments, labels
-2. **Implement**: Write fixes with proper error handling
-3. **Test**: Generate comprehensive test coverage
-4. **Document**: Prepare detailed PR descriptions
+**1.** **Analyze**: Parse issue details, comments, labels
+**2.** **Implement**: Write fixes with proper error handling
+**3.** **Test**: Generate comprehensive test coverage
+**4.** **Document**: Prepare detailed PR descriptions
 
 Integrates with *GitHub API* for **seamless workflow automation**.
