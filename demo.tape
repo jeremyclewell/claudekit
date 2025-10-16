@@ -20,7 +20,9 @@ Sleep 1s
 Type "# Interactive TUI for creating .claude/ configurations"
 Enter
 Sleep 2s
-Clear
+Type "clear"
+Enter
+Sleep 500ms
 
 # Navigate to project directory
 Type "cd /Users/jeremyclewellclewell/Documents/claudekit"
@@ -247,7 +249,9 @@ Enter
 Sleep 2s
 
 # Final message
-Clear
+Type "clear"
+Enter
+Sleep 500ms
 Type "# claudekit setup complete! ✨"
 Enter
 Sleep 500ms
