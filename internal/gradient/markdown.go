@@ -195,8 +195,7 @@ func GenerateGlamourStyle(palette paletteType) *glamour.TermRenderer {
 			LevelIndent: 2,
 		},
 		Enumeration: ansi.StylePrimitive{
-			Color:       strPtr(textColor), // Plain text color for numbered lists
-			BlockPrefix: "",
+			Color: strPtr(textColor), // Plain text color for numbered lists
 		},
 		Item: ansi.StylePrimitive{
 			Color:       strPtr(textColor), // Plain text color for list items
