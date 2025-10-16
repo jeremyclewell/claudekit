@@ -196,7 +196,7 @@ func GenerateGlamourStyle(palette paletteType) *glamour.TermRenderer {
 		},
 		Enumeration: ansi.StylePrimitive{
 			Color:  strPtr(textColor), // Plain text color for numbered lists
-			Format: "{{.}}. ",         // Render as "1. ", "2. ", etc.
+			Format: "{{.text}}. ",     // Render as "1. ", "2. ", etc.
 		},
 		Item: ansi.StylePrimitive{
 			Color:       strPtr(textColor), // Plain text color for list items
