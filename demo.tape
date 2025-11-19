@@ -3,7 +3,7 @@
 
 Output demo.gif
 
-Set Shell zsh
+Set Shell bash
 Set FontSize 14
 Set Width 1600
 Set Height 1000
@@ -13,27 +13,6 @@ Set Padding 20
 # Set truecolor mode for gradient rendering
 Env COLORTERM truecolor
 
-# Title card
-Type "# claudekit - Claude Code Project Setup Tool"
-Enter
-Sleep 1s
-Type "# Interactive TUI for creating .claude/ configurations"
-Enter
-Sleep 2s
-Type "clear"
-Enter
-Sleep 500ms
-
-# Navigate to project directory
-Type "cd /Users/jeremyclewellclewell/Documents/claudekit"
-Enter
-Sleep 500ms
-
-# Show the binary
-Type "ls -lh claudekit"
-Enter
-Sleep 1s
-
 # Launch the application
 Type "./claudekit"
 Enter
@@ -42,10 +21,6 @@ Sleep 2s
 # ============================================
 # Form Interaction - Fill out the configuration
 # ============================================
-
-# Project name field (already focused)
-Type "demo-project"
-Sleep 500ms
 
 # Move to Description field
 Tab
@@ -222,7 +197,7 @@ Sleep 2s
 # Exit Application
 # ============================================
 
-Type "q"
+Enter
 Sleep 1s
 
 # Show generated files
@@ -245,16 +220,5 @@ Sleep 2s
 
 # Show settings.json structure
 Type "cat .claude/settings.json | head -30"
-Enter
-Sleep 2s
-
-# Final message
-Type "clear"
-Enter
-Sleep 500ms
-Type "# claudekit setup complete! ✨"
-Enter
-Sleep 500ms
-Type "# Your Claude Code project is ready to use"
 Enter
 Sleep 2s

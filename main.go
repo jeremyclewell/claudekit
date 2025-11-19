@@ -496,16 +496,6 @@ func validateModule(module *ComponentModule, fs embed.FS) error {
 }
 
 // ASCII Art Title (T011) - Pre-generated with figlet "small" font
-
-// const asciiTitle = `▄▖▜      ▌    ▖▖▘▗ 
-// ▌ ▐ ▀▌▌▌▛▌█▌  ▙▘▌▜▘
-// ▙▖▐▖█▌▙▌▙▌▙▖  ▌▌▌▐▖`
-
-// const asciiTitle = ` ▗▄▄▖▗▖    ▗▄▖ ▗▖ ▗▖▗▄▄▄ ▗▄▄▄▖    ▗▖ ▗▖▗▄▄▄▖▗▄▄▄▖
-// ▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌  █▐▌       ▐▌▗▞▘  █    █  
-// ▐▌   ▐▌   ▐▛▀▜▌▐▌ ▐▌▐▌  █▐▛▀▀▘    ▐▛▚▖   █    █  
-// ▝▚▄▄▖▐▙▄▄▖▐▌ ▐▌▝▚▄▞▘▐▙▄▄▀▐▙▄▄▖    ▐▌ ▐▌▗▄█▄▖  █  `
-
 const asciiTitle = `┏━╸╻  ┏━┓╻ ╻╺┳┓┏━╸   ╻┏ ╻╺┳╸
 ┃  ┃  ┣━┫┃ ┃ ┃┃┣╸    ┣┻┓┃ ┃ 
 ┗━╸┗━╸╹ ╹┗━┛╺┻┛┗━╸   ╹ ╹╹ ╹ `
@@ -553,9 +543,6 @@ var (
 	descStyle = lipgloss.NewStyle().
 			BorderTop(true).
 			Border(lipgloss.RoundedBorder()).
-			// BorderStyle(lipgloss.Border{
-			// 	Top: "//",
-			// }).
 			BorderForeground(lipgloss.Color("#25A065")).
 			Padding(1).
 			MarginTop(1)
