@@ -1,30 +1,62 @@
 # claudekit
 
-A command-line tool that creates a complete Claude Code project setup through an interactive TUI form.
+> Interactive TUI for creating complete Claude Code project configurations
+
+![claudekit demo](assets/Claude%20Kit.gif)
+
+A command-line tool that creates a complete Claude Code project setup through an interactive TUI form. Generate `.claude/` configurations, hooks, subagents, custom commands, and MCP server setups with a beautiful, gradient-powered terminal interface.
+
+## What It Generates
+
+claudekit creates a complete Claude Code project setup with:
+
+- **CLAUDE.md** - Project documentation and build commands
+- **.claude/settings.json** - Permissions, hooks, and environment config
+- **.claude/agents/** - Specialized subagent definitions (code-reviewer, test-runner, bug-sleuth, etc.)
+- **.claude/hooks/** - Shell/Python scripts for lifecycle events
+- **.claude/commands/** - Custom slash commands for workflows
+- **.mcp.json** - MCP server configurations (GitHub, Notion, Linear, etc.)
 
 ## Features
 
-- 🎨 **Gradient Visual System** - Polished TUI with smooth color gradients
-- 🖼️ **ASCII Art Titles** - Dynamic width-based rendering with gradient foreground
-- 🎯 **Interactive Configuration** - Bubble Tea-powered forms
-- 🔧 **Multi-Language Support** - Go, TypeScript, Python detection
-- 🤖 **Agent Templates** - Pre-configured subagent definitions
-- 🪝 **Lifecycle Hooks** - Automated linting and validation
+- 📝 **Interactive Forms** - Bubble Tea-powered configuration wizard
+- 🔧 **Multi-Language Support** - Auto-detection for Go, TypeScript, Python
+- 🤖 **Agent Library** - 8 pre-configured subagent templates
+- 🪝 **Smart Hooks** - Automated linting, validation, and context injection
+- 🔌 **MCP Integration** - 5 popular MCP server templates
+- 📦 **Modular System** - Extensible via markdown module definitions
 
 ## Quick Start
 
-### Build and Run
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/claudekit.git
+cd claudekit
+
+# Build the binary
 make build
+
+# Run the interactive setup
 ./claudekit
 ```
 
-Or run directly:
+Or run directly without building:
 
 ```bash
 make run
 ```
+
+### Usage
+
+1. Launch `./claudekit` in your terminal
+2. Fill out the interactive form:
+   - Project name and description
+   - Primary programming language
+   - Select subagents, hooks, commands, and MCP servers
+3. Press Enter to generate your `.claude/` configuration
+4. Start using Claude Code with your new setup!
 
 ### Development
 
@@ -93,88 +125,98 @@ Some scenarios require manual testing in a real terminal:
 
 See `specs/002-lets-make-the/quickstart.md` for detailed manual test procedures.
 
-## Architecture
+## Available Modules
 
-### Single-File Design
+### Subagents (8 total)
+- **code-reviewer** - Code quality and security review
+- **test-runner** - Test execution and failure fixing
+- **bug-sleuth** - Root cause debugging and analysis
+- **security-auditor** - Security vulnerability scanning
+- **perf-optimizer** - Performance bottleneck identification
+- **docs-writer** - Documentation generation
+- **release-manager** - Release preparation and changelog generation
+- **data-scientist** - Data analysis and SQL query assistance
 
-All application code is in `main.go` (Constitution Principle I):
-- TUI model and update logic (Bubble Tea)
-- Gradient rendering system
-- ASCII art title with width-based conditional rendering
-- Form configuration and file generation
+### Hooks (8 total)
+- **session-start** - Project context injection on session start
+- **session-end** - Cleanup and summary generation
+- **user-prompt-submit** - Pre-flight prompt validation
+- **pre-tool-use** - Guard rails for sensitive operations
+- **post-tool-use** - Post-execution validation and linting
+- **pre-compact** - Context cleanup before compaction
+- **stop** - Graceful shutdown handling
+- **subagent-stop** - Subagent cleanup and reporting
 
-### Visual System
+### Custom Commands (10 total)
+- `/add-feature` - Guided feature implementation workflow
+- `/add-tests` - Test generation and coverage improvement
+- `/debug-issue` - Structured debugging workflow
+- `/fix-github-issue` - GitHub issue resolution workflow
+- `/refactor-code` - Safe refactoring with validation
+- `/optimize-performance` - Performance analysis and optimization
+- `/security-audit` - Comprehensive security review
+- `/generate-docs` - Documentation generation
+- `/setup-ci` - CI/CD pipeline setup
+- `/migrate-database` - Database migration workflow
 
-**Gradient Engine:**
-- Terminal capability detection (8-color, 256-color, truecolor)
-- RGB color interpolation with easing functions
-- Adaptive color quantization
-- Foreground and background gradient modes
+### MCP Servers (5 total)
+- **GitHub** - Repository, issues, PRs integration
+- **Notion** - Wiki and documentation integration
+- **Linear** - Issue tracking integration
+- **Airtable** - Database and spreadsheet integration
+- **Sentry** - Error monitoring integration
 
-**ASCII Art Title:**
-- Pre-generated figlet "small" font (embedded constant)
-- Dynamic rendering based on terminal width (>= 60 cols)
-- Fallback to regular gradient text for narrow terminals
-- Gradient applied line-by-line for smooth effect
+## Extending claudekit
 
-### Testing Architecture
+### Adding New Modules
 
-**3-Layer Testing Strategy:**
-1. **Unit Tests** (`main_test.go`) - Logic validation
-2. **VHS Tests** (`vhs_test.go`) - Automated visual screenshots
-3. **Manual Tests** (`quickstart.md`) - Human validation
+Create a markdown file in the appropriate `assets/modules/` subdirectory:
 
-This approach balances automation with the need for subjective visual quality assessment.
+```markdown
+---
+name: my-custom-agent
+description: Custom agent for specialized tasks
+language: bash
+tools: ["Read", "Write", "Bash"]
+permissions: ["read:*", "write:**/*.md"]
+---
 
-## Project Structure
+# Agent Instructions
 
+Your custom agent implementation here...
 ```
-claudekit/
-├── main.go              # Single-file application
-├── main_test.go         # Unit tests
-├── vhs_test.go          # VHS visual test integration
-├── Makefile             # Build and test automation
-├── CLAUDE.md            # Claude Code guidance
-├── README.md            # This file
-└── specs/
-    ├── 001-lets-create-a/    # Gradient system feature
-    └── 002-lets-make-the/    # ASCII art title feature
-        ├── spec.md
-        ├── plan.md
-        ├── tasks.md
-        ├── quickstart.md
-        └── vhs-tests/        # VHS test scripts
-            ├── *.tape files
-            ├── run-all-tests.sh
-            ├── VALIDATION-CHECKLIST.md
-            └── QUICKSTART.md
-```
+
+Modules are automatically loaded at runtime and validated against the schema.
 
 ## Contributing
 
-### Before Submitting PR
+Contributions are welcome! Please follow these guidelines:
 
-1. Run all checks: `make check`
-2. Run visual tests: `make test-vhs` (if VHS installed)
-3. Review screenshots against validation checklist
-4. Test manually in different terminal emulators
-5. Update documentation if adding features
+1. **Run all checks**: `make check` (fmt, vet, tests)
+2. **Add tests**: Unit tests for logic, VHS tests for UI changes
+3. **Update docs**: Keep CLAUDE.md and README.md in sync
+4. **Follow conventions**: Modular architecture, clean separation of concerns
 
 ### Development Workflow
 
-1. **Unit Tests First** (TDD) - Write failing tests before implementation
-2. **Implement Feature** - Maintain single-file architecture
-3. **VHS Tests** - Add visual test scenarios if UI changes
-4. **Manual Validation** - Test in real terminal
-5. **Documentation** - Update CLAUDE.md and README.md
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes with tests
+4. Run `make check` and `make test-all`
+5. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
 ## License
 
-See LICENSE file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
-## Learn More
+## Acknowledgments
 
-- [Bubble Tea](https://github.com/charmbracelet/bubbletea) - TUI framework
-- [Lipgloss](https://github.com/charmbracelet/lipgloss) - Terminal styling
-- [VHS](https://github.com/charmbracelet/vhs) - Visual testing tool
-- [Claude Code](https://claude.com/claude-code) - AI-powered coding assistant
+Built with:
+- [Bubble Tea](https://github.com/charmbracelet/bubbletea) - Excellent TUI framework
+- [Lipgloss](https://github.com/charmbracelet/lipgloss) - Terminal styling and layout
+- [Glamour](https://github.com/charmbracelet/glamour) - Markdown rendering
+- [Huh](https://github.com/charmbracelet/huh) - Interactive forms
+- [VHS](https://github.com/charmbracelet/vhs) - Visual testing
+
