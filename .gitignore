@@ -1,0 +1,66 @@
+# Binaries
+claudekit
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+*.out
+
+# Go workspace file
+go.work
+
+# Build artifacts
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.backup
+main.go.backup
+main.go.tmp
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code configuration (user-specific)
+.claude/
+.crush/
+
+# Specify framework (user-specific)
+.specify/
+
+# Documentation artifacts
+FILES_CREATED.md
+NEXT_STEPS.md
+REFACTORING_REPORT.md
+SUMMARY.md
+
+# Test output
+test.md
+specs/**/output/
+specs/**/screenshots/
+
+# VHS output
+*.gif
+!demo.gif
+
+# Coverage
+*.coverprofile
+coverage.html
+coverage.txt
